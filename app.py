@@ -15,11 +15,23 @@ load_dotenv()
 
 machine = TocMachine(
     states=["user", "adapt", "care","dog","cat","dog_fat","dog_sick","dog_vaccine","dog_parasite","cat_fat","cat_sick","cat_vaccine","cat_parasite","dog_heart","dog_infectious","dog_cancer","dog_kidney",
-            "dog_too_fat","dog_median","dog_too_thin","cat_tooth","cat_liver","cat_diabete","cat_kidney","cat_too_fat","cat_median","cat_too_thin"],
+            "dog_too_fat","dog_median","dog_too_thin","cat_tooth","cat_liver","cat_diabete","cat_kidney","cat_too_fat","cat_median","cat_too_thin","abandon","commercial"],
     transitions=[
         {"trigger": "advance", "source": ["user", "adapt", "care","dog","cat","dog_fat","dog_sick","dog_vaccine","dog_parasite","cat_fat","cat_sick","cat_vaccine","cat_parasite","dog_heart","dog_infectious","dog_cancer","dog_kidney",
-            "dog_too_fat","dog_median","dog_too_thin","cat_tooth","cat_liver","cat_diabete","cat_kidney","cat_too_fat","cat_median","cat_too_thin"],
+            "dog_too_fat","dog_median","dog_too_thin","cat_tooth","cat_liver","cat_diabete","cat_kidney","cat_too_fat","cat_median","cat_too_thin","abandon","commercial"],
          "dest": "user","conditions": "is_going_to_user",},
+        {
+            "trigger": "advance",
+            "source": "adapt",
+            "dest": "commercial",
+            "conditions": "is_going_to_commercial",
+        },
+        {
+            "trigger": "advance",
+            "source": "adapt",
+            "dest": "abandon",
+            "conditions": "is_going_to_abandon",
+        },
         {
             "trigger": "advance",
             "source": "user",
