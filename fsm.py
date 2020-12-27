@@ -10,9 +10,10 @@ class TocMachine(GraphMachine):
 
     def is_going_to_user(self, event):
         text = event.message.text
+
         return text.lower() == "home"
     def on_enter_user(self, event):
-        text = 'home'
+        text = '輸入care獲取寵物相關資訊\n隨時輸入home來回到首頁\n回時輸入fsm來獲得fsm圖檔'
         send_text_message(event.reply_token,text)
     def is_going_to_care(self, event):
         text = event.message.text
