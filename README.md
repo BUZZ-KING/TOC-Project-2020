@@ -29,6 +29,7 @@
 #### 點選疫苗
 輸出一張有關於貓咪疫苗  相關資訊的照片
 ## 輸入fsm以跑出fsm
+![](https://imgur.com/aispSB6.jpg)
 在任何時候輸入fsm都匯回傳fsm圖
-![](https://imgur.com/YyBOcTc.jpg)
+
 
