@@ -8,27 +8,174 @@ from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
 from fsm import TocMachine
-from utils import send_text_message
+from utils import send_text_message, send_carousel_message, send_button_message, send_image_message, send_text_message_AI
 
 load_dotenv()
 
 
 machine = TocMachine(
-    states=["user", "state1", "state2"],
+    states=["user", "adapt", "care","dog","cat","dog_fat","dog_sick","dog_vaccine","dog_parasite","cat_fat","cat_sick","cat_vaccine","cat_parasite","dog_heart","dog_infectious","dog_cancer","dog_kidney",
+            "dog_too_fat","dog_median","dog_too_thin","cat_tooth","cat_liver","cat_diabete","cat_kidney","cat_too_fat","cat_median","cat_too_thin"],
     transitions=[
+        {"trigger": "advance", "source": ["user", "adapt", "care","dog","cat","dog_fat","dog_sick","dog_vaccine","dog_parasite","cat_fat","cat_sick","cat_vaccine","cat_parasite","dog_heart","dog_infectious","dog_cancer","dog_kidney",
+            "dog_too_fat","dog_median","dog_too_thin","cat_tooth","cat_liver","cat_diabete","cat_kidney","cat_too_fat","cat_median","cat_too_thin"],
+         "dest": "user","conditions": "is_going_to_user",},
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state1",
-            "conditions": "is_going_to_state1",
+            "dest": "adapt",
+            "conditions": "is_going_to_adapt",
         },
         {
             "trigger": "advance",
             "source": "user",
-            "dest": "state2",
-            "conditions": "is_going_to_state2",
+            "dest": "care",
+            "conditions": "is_going_to_care",
         },
-        {"trigger": "go_back", "source": ["state1", "state2"], "dest": "user"},
+        {
+            "trigger": "advance",
+            "source": "care",
+            "dest": "dog",
+            "conditions": "is_going_to_dog",
+        },
+        {
+            "trigger": "advance",
+            "source": "care",
+            "dest": "cat",
+            "conditions": "is_going_to_cat",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog",
+            "dest": "dog_fat",
+            "conditions": "is_going_to_dog_fat",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog",
+            "dest": "dog_sick",
+            "conditions": "is_going_to_dog_sick",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog",
+            "dest": "dog_vaccine",
+            "conditions": "is_going_to_dog_vaccine",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog",
+            "dest": "dog_parasite",
+            "conditions": "is_going_to_dog_parasite",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat",
+            "dest": "cat_fat",
+            "conditions": "is_going_to_cat_fat",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat",
+            "dest": "cat_sick",
+            "conditions": "is_going_to_cat_sick",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat",
+            "dest": "cat_vaccine",
+            "conditions": "is_going_to_cat_vaccine",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat",
+            "dest": "cat_parasite",
+            "conditions": "is_going_to_cat_parasite",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_fat",
+            "dest": "dog_too_fat",
+            "conditions": "is_going_to_dog_too_fat",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_fat",
+            "dest": "dog_too_thin",
+            "conditions": "is_going_to_dog_too_thin",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_fat",
+            "dest": "dog_median",
+            "conditions": "is_going_to_dog_median",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_sick",
+            "dest": "dog_heart",
+            "conditions": "is_going_to_dog_heart",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_sick",
+            "dest": "dog_infectious",
+            "conditions": "is_going_to_dog_infectious",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_sick",
+            "dest": "dog_cancer",
+            "conditions": "is_going_to_dog_diabete",
+        },
+        {
+            "trigger": "advance",
+            "source": "dog_sick",
+            "dest": "dog_kidney",
+            "conditions": "is_going_to_dog_kidney",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_fat",
+            "dest": "cat_too_fat",
+            "conditions": "is_going_to_cat_too_fat",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_fat",
+            "dest": "cat_too_thin",
+            "conditions": "is_going_to_cat_too_thin",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_fat",
+            "dest": "cat_median",
+            "conditions": "is_going_to_cat_median",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_sick",
+            "dest": "cat_tooth",
+            "conditions": "is_going_to_cat_tooth",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_sick",
+            "dest": "cat_liver",
+            "conditions": "is_going_to_cat_liver",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_sick",
+            "dest": "cat_cancer",
+            "conditions": "is_going_to_cat_cancer",
+        },
+        {
+            "trigger": "advance",
+            "source": "cat_sick",
+            "dest": "cat_kidney",
+            "conditions": "is_going_to_cat_kidney",
+        },
     ],
     initial="user",
     auto_transitions=False,
