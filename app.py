@@ -264,6 +264,7 @@ def webhook_handler():
         response = machine.advance(event)
         if response == False:
             if event.message.text.lower() == 'fsm':
+                show_fsm()
                 url='https://imgur.com/aispSB6.jpg'
                 send_image_message(event.reply_token,url)
             else :
