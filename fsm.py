@@ -13,7 +13,7 @@ class TocMachine(GraphMachine):
 
         return text.lower() == "home"
     def on_enter_user(self, event):
-        text = '輸入care獲取寵物相關資訊\n隨時輸入home來回到首頁\n回時輸入fsm來獲得fsm圖檔'
+        text = '輸入care獲取寵物相關資訊\n輸入adapt來看領養前需要知道的事情\n隨時輸入home來回到首頁\n回時輸入fsm來獲得fsm圖檔'
         send_text_message(event.reply_token,text)
     def is_going_to_care(self, event):
         text = event.message.text
@@ -23,6 +23,44 @@ class TocMachine(GraphMachine):
         text = event.message.text
         return text.lower() == "adapt"
 
+    def on_enter_adapt(self, event):
+        title = '收養資訊'
+        text = '我國越來越多的浪浪,總數量可能超過一億隻,這些數量的浪浪，有一部分是走失，但有90%以上是被主人遺棄'
+        btn = [
+            MessageTemplateAction(
+                label='棄養理由',
+                text='棄養理由'
+            ),
+            MessageTemplateAction(
+                label='花費',
+                text='花費'
+            ),
+        ]
+        url = 'https://imgur.com/jj89O6m.jpg'
+        send_button_message(event.reply_token, title, text, btn, url)
+    def is_going_to_abandon(self, event):
+        global pet
+        text = event.message.text
+
+        if text == '棄養理由':
+            pet = '棄養理由'
+            return True
+        return False
+
+    def on_enter_abandon(self, event):
+        url = 'https://imgur.com/i2XqFa1.jpg'
+        send_image_message(event.reply_token,url)
+    def is_going_to_commercial(self, event):
+        text = event.message.text
+
+        if text == '花費':
+            pet = '花費'
+            return True
+            return False
+
+    def on_enter_commercial(self, event):
+        text='各種費用養貓狗花費\n晶片費用:植入費：300元＋登記費用\n伙食費:一年大約5,000~15,000元\n施打疫苗:三合一疫苗500~900元\n幼犬：三劑五合一疫苗+狂犬病疫苗3,000~3,900元\n成犬：五合一疫苗+狂犬病疫苗3,000~3,900元\n心絲蟲預防200~300元/月\n其他開銷	3,000~5,000元/年	2,000~5,000元/年\n醫療費	不一定，500~上萬元不等\n喪葬費	2,500~50,000元'
+        send_text_message(event.reply_token, text)
     def on_enter_care(self, event):
         title = '請問你比較想知道狗狗還是貓咪的照顧資訊'
         text = '『狗狗』還是『貓咪』'
